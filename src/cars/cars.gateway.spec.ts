@@ -1,18 +1,24 @@
-import { Test, TestingModule } from '@nestjs/testing';
-import { CarsGateway } from './cars.gateway';
+import {
+  WebSocketGateway,
+  WebSocketServer,
+  OnGatewayInit,
+} from '@nestjs/websockets';
+import { Server } from 'socket.io';
 
-describe('CarsGateway', () => {
-  let gateway: CarsGateway;
+@WebSocketGateway({
+  cors: {
+    origin: '*',
+  },
+})
+export class CarsGateway implements OnGatewayInit {
+  @WebSocketServer()
+  server: Server;
 
-  beforeEach(async () => {
-    const module: TestingModule = await Test.createTestingModule({
-      providers: [CarsGateway],
-    }).compile();
+  afterInit() {
+    console.log('WebSocket Gateway initialized');
+  }
 
-    gateway = module.get<CarsGateway>(CarsGateway);
-  });
-
-  it('should be defined', () => {
-    expect(gateway).toBeDefined();
-  });
-});
+  sendNotification(message: string) {
+    this.server.emit('car_notification', { message });
+  }
+}
