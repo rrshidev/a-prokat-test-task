@@ -12,9 +12,26 @@ export class BpiumService {
       this.configService.get('BP_DOMAIN'),
       this.configService.get('BP_LOGIN'),
       this.configService.get('BP_PASSWORD'),
-      'https',
-      5000,
     );
+  }
+
+  async getRecords(catalogId: string) {
+    return this.bp.getRecords(catalogId);
+  }
+
+  async getRecord(catalogId: string, recordId: string) {
+    const records = await this.bp.getRecords(catalogId, {
+      $and: [{ id: recordId }],
+    });
+    return records?.[0];
+  }
+
+  async postRecord(catalogId: string, data: any) {
+    return this.bp.postRecord(catalogId, data);
+  }
+
+  async patchRecord(catalogId: string, recordId: string, data: any) {
+    return this.bp.patchRecord(catalogId, recordId, data);
   }
 
   async testConnection() {
@@ -24,10 +41,5 @@ export class BpiumService {
     } catch (e) {
       throw new Error('Bpium connection failed: ' + e.message);
     }
-  }
-
-  async getCars() {
-    const api_id: string = this.configService.get('BP_PASSWORD');
-    return this.bp.getRecords(api_id);
   }
 }

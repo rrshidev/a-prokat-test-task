@@ -1,19 +1,11 @@
-import { Module, OnModuleInit } from '@nestjs/common';
+import { Module, forwardRef } from '@nestjs/common';
 import { BpiumService } from './bpium.service';
+import { ConfigModule } from '@nestjs/config';
+import { CarsModule } from 'src/cars/cars.module';
 
 @Module({
+  imports: [ConfigModule.forRoot(), forwardRef(() => CarsModule)],
   providers: [BpiumService],
   exports: [BpiumService],
 })
-export class BpiumModule implements OnModuleInit {
-  constructor(private bpiumService: BpiumService) {}
-
-  async onModuleInit() {
-    try {
-      await this.bpiumService.testConnection();
-      console.log('✅ Bpium connected successfully');
-    } catch (e) {
-      console.error('❌ Bpium connection error:', e.message);
-    }
-  }
-}
+export class BpiumModule {}
