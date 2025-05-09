@@ -4,4 +4,5 @@ export class CreateCarDto {
   @IsString()
   @IsNotEmpty()
   title: string;
+  status: string;
 }

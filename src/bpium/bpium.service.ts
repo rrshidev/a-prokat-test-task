@@ -16,14 +16,16 @@ export class BpiumService {
   }
 
   async getRecords(catalogId: string) {
-    return this.bp.getRecords(catalogId);
+    console.log('ID CATALOG---->', catalogId);
+    const records = await this.bp.getRecords(catalogId, {});
+    console.log('ALL_CARS--->', records);
+    return records;
   }
 
   async getRecord(catalogId: string, recordId: string) {
-    const records = await this.bp.getRecords(catalogId, {
-      $and: [{ id: recordId }],
-    });
-    return records?.[0];
+    const record = await this.bp.getRecordById(catalogId, recordId);
+    console.log('RECORD_FROM_BPIUM---->', record);
+    return record;
   }
 
   async postRecord(catalogId: string, data: any) {

@@ -4,6 +4,7 @@ export class UpdateCarDto {
   @IsString()
   @IsOptional()
   title?: string;
+  status?: string;
 
   @IsBoolean()
   @IsOptional()

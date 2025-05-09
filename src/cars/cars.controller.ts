@@ -16,7 +16,6 @@ export class CarsController {
   async getCar(@Param('id') id: string) {
     return this.carsService.getCarById(id);
   }
-
   @Post()
   async createCar(@Body() dto: CreateCarDto) {
     return this.carsService.createCar(dto.title);
