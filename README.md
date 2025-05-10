@@ -80,12 +80,16 @@ $ curl --location --request PUT 'http://localhost:3000/cars/5' \
 $ --header 'Content-Type: application/json' \
 $ --header 'Authorization: Basic <key>' \
 $ --data '{
-$     "title": "Ferrari 50",
-$     "status": "1"
-$ }'
+     "title": "Ferrari 50",
+     "status": "1"
+ }'
+```
 
-# Test WebSocket events (with wscat client)
+## Test WebSocket events (with wscat client)
+
+```bash
 $ curl "http://localhost:3000/cars/notify?message=Test123"
+```
 
 ## Deployment
 
