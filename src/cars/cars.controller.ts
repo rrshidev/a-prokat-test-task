@@ -22,7 +22,7 @@ export class CarsController {
   }
 
   @Put(':id')
-  async updateCar(@Param('id') id: string, @Body() dto: UpdateCarDto) {
-    return this.carsService.updateCar(id, dto);
+  async updateCar(@Param('id') recordId: string, @Body() dto: UpdateCarDto) {
+    return this.carsService.updateCar(recordId, dto.title, dto.status);
   }
 }

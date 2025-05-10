@@ -33,7 +33,7 @@ export class CarsService {
     return car;
   }
   async createCar(title: string) {
-    console.log('TITLE OF CAR---->', title)
+    console.log('TITLE OF CAR---->', title);
     const result = await this.bpiumService.postRecord(this.CATALOG_ID, {
       2: title,
       3: '1',
@@ -42,12 +42,16 @@ export class CarsService {
     return result;
   }
 
-  async updateCar(id: string, data: { title?: string; isActive?: boolean }) {
-    const status = data.isActive ? 'Работает' : 'Не работает';
-    const result = await this.bpiumService.patchRecord(this.CATALOG_ID, id, {
-      ...(data.title && { title: data.title }),
-      status,
-    });
+  async updateCar(recordId: string, title: string, status: string) {
+    const data = {
+      '2': title,
+      '3': status 
+    }
+    const result = await this.bpiumService.patchRecord(
+      this.CATALOG_ID,
+      recordId,
+      data
+    );
     this.carsGateway.handleCarUpdate();
     return result;
   }
