@@ -9,4 +9,7 @@ export class BpiumConfigDto {
 
   @IsString()
   BP_PASSWORD: string;
+
+  @IsString()
+  BP_CATALOG_ID: string;
 }

@@ -6,6 +6,7 @@ import {
 } from '@nestjs/common';
 import { BpiumService } from '../bpium/bpium.service';
 import { CarsGateway } from './cars.gateway';
+import { ConfigService } from '@nestjs/config';
 
 @Injectable()
 export class CarsService {
@@ -13,8 +14,9 @@ export class CarsService {
     private readonly bpiumService: BpiumService,
     @Inject(forwardRef(() => CarsGateway))
     private readonly carsGateway: CarsGateway,
+    private readonly configService: ConfigService,
   ) {}
-  private readonly CATALOG_ID = '16';
+  private readonly CATALOG_ID = this.configService.get<string>('BP_CATALOG_ID');
 
   async getActiveCars() {
     console.log('NOW, I HERE!!!!!!!!!!');
@@ -45,12 +47,12 @@ export class CarsService {
   async updateCar(recordId: string, title: string, status: string) {
     const data = {
       '2': title,
-      '3': status 
-    }
+      '3': status,
+    };
     const result = await this.bpiumService.patchRecord(
       this.CATALOG_ID,
       recordId,
-      data
+      data,
     );
     this.carsGateway.handleCarUpdate();
     return result;
