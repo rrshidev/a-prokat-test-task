@@ -31,12 +31,17 @@ export class CarsController {
     return this.carsService.updateCar(recordId, dto.title, dto.status);
   }
 
-  @Get('notify')
+  @Get(':notify')
   async sendNotification(@Query('message') message = 'Default notification') {
     this.carsGateway.broadcastNotification(message);
     return {
       success: true,
       message: 'Notification sent to all connected clients',
     };
+  }
+
+  @Get(':connections')
+  async checkConnectedClients() {
+    return this.carsGateway.getConnectedClients();
   }
 }

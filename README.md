@@ -68,10 +68,25 @@ $ curl http://localhost:3000/cars/
 $ curl http://localhost:3000/cars/1 - number is a catalog id from bipium table with car notes
 
 # post new note with car, whre status "Работает" is default
-![alt text](image.png)
+$ curl --location 'http://localhost:3000/cars/' \
+$ --header 'Content-Type: application/json' \
+$ --header 'Authorization: Basic <key>' \
+$ --data '{
+$     "title": "Ford"
+$ }'
 
 # update fields of record (car card)
-![alt text](image-1.png)
+$ curl --location --request PUT 'http://localhost:3000/cars/5' \
+$ --header 'Content-Type: application/json' \
+$ --header 'Authorization: Basic <key>' \
+$ --data '{
+$     "title": "Ferrari 50",
+$     "status": "1"
+$ }'
+
+# Test WebSocket events (with wscat client)
+$ curl "http://localhost:3000/cars/notify?message=Test123"
+
 ## Deployment
 
 When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.
